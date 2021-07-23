@@ -22,3 +22,13 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+git status
+git add .
+git commit -m "调整初始目录结构"
+git push
+npm install element-ui -save
+npm install axios
+npm install qs
