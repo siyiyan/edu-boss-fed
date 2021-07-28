@@ -24,16 +24,19 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-
+### 项目启用过的命令
+```shell
 git status
 git add .
 git commit -m "调整初始目录结构"
 git push
+
 npm install element-ui -save
 npm install axios
 npm install qs
+```
 
-关于 Token 过期的问题
+### 关于 Token 过期的问题
 access_token
   作用：获取需要授权的接口数据
 
