@@ -15,7 +15,7 @@ export const getRoles = (data: any) => {
 export const deleteRole = (id: string | number) => {
   return request({
     method: 'DELETE',
-    url: '/boss/role/{id}'
+    url: `/boss/role/${id}`
   })
 }
 
@@ -24,5 +24,12 @@ export const createOrUpdate = (data: any) => {
     method: 'POST',
     url: '/boss/role/saveOrUpdate',
     data
+  })
+}
+// 获取角色ID
+export const getRoleById = (id: string | number) => {
+  return request({
+    method: 'GET',
+    url: `/boss/role/${id}`
   })
 }
