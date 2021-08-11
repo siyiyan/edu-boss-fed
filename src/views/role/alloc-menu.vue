@@ -2,7 +2,7 @@
   <div class="alloc-menu">
     <el-card>
       <div slot="header">
-        <span>分配权限</span>
+        <span>分配菜单</span>
       </div>
       <el-tree
       ref="menu-tree"
@@ -14,7 +14,7 @@
       default-expand-all
       ></el-tree>
       <div style="text-align:center;">
-        <el-button>清空</el-button>
+        <el-button @click="resetChecked">清空</el-button>
         <el-button type="primary" @click="onSave">保存</el-button>
       </div>
     </el-card>
@@ -56,7 +56,6 @@ export default Vue.extend({
     async loadRoleMenus () {
       const { data } = await getRoleMenus(this.roleId)
       this.getCheckedKeys(data.data)
-      console.log(data)
     },
     getCheckedKeys (menus: any) {
       menus.forEach((menu: any) => {
@@ -83,6 +82,9 @@ export default Vue.extend({
       })
       this.$message.success('操作成功')
       this.$router.back()
+    },
+    resetChecked () {
+      (this.$refs['menu-tree'] as Tree).setCheckedKeys([])
     }
   }
 })

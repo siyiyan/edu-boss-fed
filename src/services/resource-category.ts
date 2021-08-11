@@ -3,7 +3,7 @@
  */
 
 import request from '@/utils/request'
-
+// 查询资源分类列表
 export const getResourceCategories = () => {
   return request({
     method: 'GET',

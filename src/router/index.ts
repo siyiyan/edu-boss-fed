@@ -71,6 +71,12 @@ const routes: Array<RouteConfig> = [
         props: true // 将路由路径参数映射到组件 props 数据中
       },
       {
+        path: '/role/:roleId/alloc-resource',
+        name: 'alloc-resource',
+        component: () => import(/* webpackChunkName: 'alloc-resource' */ '@/views/role/alloc-resource.vue'),
+        props: true // 将路由路径参数映射到组件 props 数据中
+      },
+      {
         path: '/user',
         name: 'user',
         component: () => import(/* webpackChunkName: 'user' */ '@/views/user/index.vue')

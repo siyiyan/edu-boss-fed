@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: relative;
+      border-radius: 999px;
+      animation: mymove 1s infinite;
+      animation-timing-function: linear;
+
+      /* Safari and Chrome */
+      -webkit-animation: mymove 1s;
+      animation-timing-function: cubic-bezier(0.6, .8, 1, 1, 1, 1, 1, .8);
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes mymove {
+      0% {
+        top: 0px;
+      }
+
+      75% {
+        top: 300px;
+      }
+
+      84% {
+        top: 240px;
+      }
+
+      100% {
+        top: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <p><strong>注释：</strong>Internet Explorer 9 以及更早的版本不支持 animation-timing-function 属性。</p>
+
+  <div></div>
+</body>
+
+</html>

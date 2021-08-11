@@ -3,7 +3,7 @@
  */
 
 import request from '@/utils/request'
-
+// 添加更新菜单
 export const createOrUpdateMenu = (data: any) => {
   return request({
     method: 'POST',
@@ -11,7 +11,7 @@ export const createOrUpdateMenu = (data: any) => {
     data
   })
 }
-
+// 获取编辑菜单页面信息
 export const getEditMenuInfo = (id: string | number = -1) => {
   return request({
     method: 'GET',
@@ -21,14 +21,14 @@ export const getEditMenuInfo = (id: string | number = -1) => {
     }
   })
 }
-
+// 获取所有菜单
 export const getAllMenus = () => {
   return request({
     method: 'GET',
     url: '/boss/menu/getAll'
   })
 }
-
+// 删除菜单
 export const deleteMenus = (id: number) => {
   return request({
     method: 'DELETE',

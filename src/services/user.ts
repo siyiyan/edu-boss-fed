@@ -34,3 +34,21 @@ export const getUserImfo = () => {
     // }
   })
 }
+// 分页查询用户信息
+export const getUserPages = (data: any) => {
+  return request({
+    method: 'POST',
+    url: '/boss/user/getUserPages',
+    data
+  })
+}
+// 封禁用户
+export const forbidUser = (userId: string | number) => {
+  return request({
+    method: 'POST',
+    url: '/boss/user/forbidUser',
+    params: {
+      userId
+    }
+  })
+}
