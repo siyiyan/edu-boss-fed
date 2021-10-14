@@ -34,6 +34,7 @@ git push
 npm install element-ui -save
 npm install axios
 npm install qs
+npm install wangeditor --save
 ```
 
 ### 关于 Token 过期的问题

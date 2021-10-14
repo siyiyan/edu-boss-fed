@@ -8,7 +8,7 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      router=true
+      router
     >
       <el-submenu index="1">
         <template slot="title">

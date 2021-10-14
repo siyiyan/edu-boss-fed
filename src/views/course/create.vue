@@ -16,23 +16,150 @@
           <el-step title="课程详情" icon="el-icon-picture"></el-step> -->
         </el-steps>
       </div>
-      <el-form>
+      <el-form label-width="80px">
         <div v-show="activeStep === 0">
-          基本信息
+          <el-form-item label="课程名称">
+            <el-input v-model="course.courseName"></el-input>
+          </el-form-item>
+          <el-form-item label="课程简介">
+            <el-input v-model="course.brief"></el-input>
+          </el-form-item>
+          <el-form-item label="课程概述">
+            <el-input
+            style="margin-bottom: 10px"
+            v-model="course.previewFirstField"
+            type="textarea"
+            placeholder="概述1"
+            ></el-input>
+            <el-input
+            style="margin-bottom: 10px"
+            v-model="course.previewSecondField"
+            type="textarea"
+            placeholder="概述2"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="讲师姓名">
+            <el-input v-model="course.teacherDTO.teacherName"></el-input>
+          </el-form-item>
+          <el-form-item label="讲师简介">
+            <el-input v-model="course.teacherDTO.description"></el-input>
+          </el-form-item>
+          <el-form-item label="课程排序">
+            <el-input-number
+            v-model="course.sortNum"
+            label="描述文字"></el-input-number>
+          </el-form-item>
         </div>
         <div v-show="activeStep === 1">
-          课程封面
+          <el-form-item label="课程封面">
+            <!-- upload 上传文件组件，它支持自动上传，你只需要把上传需要参数配置一下就可以了 -->
+            <!--
+              1.组件需要根据绑定的数据进行图片预览
+              2.组件需要把上传成功的图片地址同步到绑定的数据中
+              v-modal 的本质还是父子组件通信
+                1.它会给子组件传递一个名字叫 value 的数据（Props）
+                2.默认监听 input 事件，修改绑定的数据（自定义事件）
+             -->
+            <course-image
+            v-model="course.courseListImg"
+            :limit="5"
+            />
+            <!-- <el-upload
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :before-upload="beforeAvatarUpload"
+              :http-request="handleUpload"
+              >
+              <img v-if="course.courseListImg" :src="course.courseListImg" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload> -->
+          </el-form-item>
+          <el-form-item label="介绍封面">
+            <course-image
+            v-model="course.courseImgUrl"
+            :limit="5"
+            />
+          </el-form-item>
         </div>
         <div v-show="activeStep === 2">
-          销售信息
+          <el-form-item label="售卖价格">
+            <el-input v-model.number="course.discounts" type="number">
+              <template slot="append">元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品原价">
+            <el-input v-model.number="course.price" type="number">
+              <template slot="append">元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="销量">
+            <el-input v-model.number="course.sales" type="number">
+              <template slot="append">元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="活动标签">
+            <el-input maxlength="4" show-word-limit v-model="course.discountsTag"></el-input>
+          </el-form-item>
         </div>
         <div v-show="activeStep === 3">
-          秒杀活动
+          <el-form-item label="限时秒杀开关">
+            <el-switch
+              v-model="course.activityCourse"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+          <template v-if="course.activityCourse">
+            <el-form-item label="开始时间">
+              <el-date-picker
+                v-model="course.activityCourseDTO.beginTime"
+                type="date"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd"
+                >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="结束时间">
+              <el-date-picker
+                v-model="course.activityCourseDTO.endTime"
+                type="date"
+                placeholder="选择日期时间"
+                value-format="yyyy-MM-dd"
+                >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="秒杀价">
+              <el-input v-model.number="course.activityCourseDTO.amount" type="number">
+                <template slot="append">元</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="秒杀库存">
+              <el-input v-model.number="course.activityCourseDTO.stock" type="number">
+                <template slot="append">个</template>
+              </el-input>
+            </el-form-item>
+          </template>
         </div>
         <div v-show="activeStep === 4">
-          课程详情
+          <el-form-item label="课程详情">
+            <text-editor v-model="course.courseDescriptionMarkDown" />
+            <!-- <el-input type="textarea" v-model="course.courseDescriptionMarkDown"></el-input> -->
+          </el-form-item>
+          <el-form-item label="是否发布">
+            <el-switch
+              v-model="course.status"
+              :active-value="1"
+              :inactive-value="0"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
           <el-form-item>
-            <el-button type="primary">保存</el-button>
+            <el-button
+            type="primary"
+            @click="handleSave"
+            >保存</el-button>
           </el-form-item>
         </div>
         <el-form-item v-if="activeStep >= 0 && activeStep <4">
@@ -45,9 +172,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { saveOrUpdateCourse } from '@/services/course'
+import CourseImage from './components/CourseImage.vue'
+import TextEditor from '@/components/TextEditor/index.vue'
 
 export default Vue.extend({
   name: 'CourseCreate',
+  components: {
+    CourseImage,
+    TextEditor
+  },
   data () {
     return {
       activeStep: 0,
@@ -57,7 +191,55 @@ export default Vue.extend({
         { title: '销售信息', icon: 'el-icon-edit' },
         { title: '秒杀活动', icon: 'el-icon-edit' },
         { title: '课程详情', icon: 'el-icon-edit' }
-      ]
+      ],
+      imageUrl: '', // 预览图片地址
+      isSeckill: false, // 是否开启秒杀
+      course: {
+        // id: 0,
+        courseName: '',
+        brief: '',
+        teacherDTO: {
+          // id: 0,
+          // courseId: 0,
+          teacherName: '',
+          teacherHeadPicUrl: '',
+          position: '',
+          description: ''
+        },
+        courseDescriptionMarkDown: '<h1>tjh</h1>',
+        price: 0,
+        discounts: 0,
+        priceTag: '',
+        discountsTag: '',
+        isNew: true,
+        isNewDes: '',
+        courseListImg: '',
+        courseImgUrl: '',
+        sortNum: 0,
+        previewFirstField: '',
+        previewSecondField: '',
+        status: 0, // 0：未发布，1：已发布
+        sales: 0,
+        activityCourse: false, // 是否开启活动秒杀
+        activityCourseDTO: {
+          // id: 0,
+          // courseId: 0,
+          beginTime: '',
+          endTime: '',
+          amount: 0,
+          stock: 0
+        },
+        autoOnlineTime: ''
+      }
+    }
+  },
+  methods: {
+    // handleAvatarSuccess (res: any, file: any) {
+    //   this.imageUrl = URL.createObjectURL(file.raw)
+    // }
+    async handleSave () {
+      const { data } = await saveOrUpdateCourse(this.course)
+      this.$router.back()
     }
   }
 })
@@ -67,4 +249,5 @@ export default Vue.extend({
   .el-step {
     cursor: pointer;
   }
+
 </style>
